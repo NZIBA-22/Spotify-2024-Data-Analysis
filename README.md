@@ -17,7 +17,7 @@ The final deliverable is a Flask web application featuring an insights dashboard
 The project follows a modular and scalable structure, separating concerns into distinct directories for clarity and maintainability.
 
 ```bash
-project/
+Spotify-2024-Data-Analysis/
 ├── app.py               # Main Flask Web Application file
 ├── data/                # Contains all raw and processed data
 ├── dictionary/          # Holds the Data Dictionary describing variables
@@ -96,7 +96,7 @@ Follow these steps to set up and run the entire project on your local machine.
 1.  **Clone the repository:**
 ```bash
     git clone https://github.com/ludmuniz/Spotify-2024-Data-Analysis.git
-    cd spotify_hits_2024_analysis
+    cd Spotify-2024-Data-Analysis
 ```
 
 2.  **Create and activate a virtual environment:**
