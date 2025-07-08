@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE and Editor Folders
+.idea/
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# --- Data Science & ML Specific ---
+# Data Files - Never commit large data files
+/data/raw/
+/data/processed/
+
+# Saved Models - These are often large binary files
+/models/
+
+# Notebook cache
+.ipynb_checkpoints
+
+# Kaggle API credentials (if placed in project root)
+kaggle.json
