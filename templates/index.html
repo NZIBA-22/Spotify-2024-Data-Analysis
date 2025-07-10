@@ -1,24 +1,27 @@
 {% extends "_layout.html" %}
 
-{% block title %}Insights Dashboard{% endblock %}
+{% block title %}Insights Spotify{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Overall Performance Dashboard</h1>
+<div class="content-header">
+    <h1 class="page-title">Overall Performance Dashboard</h1>
+</div>
+
 <section class="kpi-grid">
     <div class="kpi-card">
-        <h2>Total Tracks</h2>
+        <h2><i class="fas fa-music icon"></i> Total Tracks Analyzed</h2>
         <p>{{ kpis.total_tracks }}</p>
     </div>
     <div class="kpi-card">
-        <h2>Unique Artists</h2>
+        <h2><i class="fas fa-users icon"></i> Unique Artists</h2>
         <p>{{ kpis.total_artists }}</p>
     </div>
     <div class="kpi-card">
-        <h2>Average Streams</h2>
+        <h2><i class="fas fa-headphones-alt icon"></i> Average Streams</h2>
         <p>{{ kpis.average_streams }}</p>
     </div>
     <div class="kpi-card">
-        <h2>Most Popular Artist</h2>
+        <h2><i class="fas fa-star icon"></i> Most Popular Artist</h2>
         <p>{{ kpis.most_popular_artist }}</p>
     </div>
 </section>
@@ -28,6 +31,7 @@
     <table>
         <thead>
             <tr>
+                <th>#</th>
                 <th>Track</th>
                 <th>Artist(s)</th>
                 <th>Streams</th>
@@ -36,6 +40,7 @@
         <tbody>
             {% for track in top_tracks %}
             <tr>
+                <td>{{ loop.index }}</td>
                 <td>{{ track['track'] }}</td>
                 <td>{{ track['artist'] }}</td>
                 <td>{{ track['spotify_streams'] }}</td>

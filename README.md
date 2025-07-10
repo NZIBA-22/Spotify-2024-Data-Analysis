@@ -83,12 +83,30 @@ A predictive model was developed to forecast a song's potential success, measure
 
 ---
 
-## 6. How to Run the Project
+## 6. Application Showcase
+
+The final project deliverable is a fully interactive web application built with Flask, featuring two main sections.
+
+### Insights Dashboard
+A high-level dashboard presenting key performance indicators and the top-performing tracks from the dataset.
+<p align="center">
+  <img src="reports/dashboard_screenshot.png" width="700">
+</p>
+
+### Predictive Simulator
+An interactive tool that allows users to input a new song's initial performance metrics and receive a real-time `track_score` prediction from our trained XGBoost model.
+<p align="center">
+  <img src="reports/simulator_screenshot.png" width="700">
+</p>
+
+---
+
+## 7. How to Run the Project
 
 Follow these steps to set up and run the entire project on your local machine.
 
 ### Prerequisites
-- Python 3.12+
+- Python 3.11+
 - Git
 
 ### Installation and Setup

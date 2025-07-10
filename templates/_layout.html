@@ -8,22 +8,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="container nav-container">
-            <a href="{{ url_for('dashboard') }}" class="logo">Spotify Insights 🚀</a>
-            <nav>
-                <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">Dashboard</a>
-                <a href="{{ url_for('simulator') }}" class="{{ 'active' if request.endpoint == 'simulator' else '' }}">Predictive Simulator</a>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">Spotify Insights</h1>
+            </div>
+            <nav class="main-nav">
+                <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="{{ url_for('simulator') }}" class="{{ 'active' if request.endpoint == 'simulator' else '' }}">
+                    <i class="fas fa-magic-wand-sparkles"></i>
+                    <span>Predictive Simulator</span>
+                </a>
             </nav>
-        </div>
-    </header>
-    <main class="container">
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        <p>Data Analysis Project | Ludmyla Muniz Cordeiro</p>
-    </footer>
+            <footer class="sidebar-footer">
+                <p>Ludmyla Coimbra Muniz Cordeiro</p>
+                <p>&copy; 2025</p>
+            </footer>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% block scripts %}{% endblock %}
 </body>
 </html>

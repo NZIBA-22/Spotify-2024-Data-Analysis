@@ -3,73 +3,150 @@
 {% block title %}Predictive Simulator{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Success Predictive Simulator</h1>
-<p class="subtitle">Enter the initial metrics of a new track to predict its potential `track_score`.</p>
+<div class="content-header">
+    <h1 class="page-title">Predictive Simulator</h1>
+    <p class="subtitle">Analyze a track's potential by simulating its initial performance metrics to forecast its `track_score`.</p>
+</div>
+
 
 <div class="simulator-container">
     <div class="card form-card">
-        <h2>Track Parameters</h2>
-        <form action="{{ url_for('predict') }}" method="post">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="spotify_streams">Spotify Streams</label>
-                    <input type="number" id="spotify_streams" name="spotify_streams" value="1500000" required>
-                </div>
-                <div class="form-group">
-                    <label for="youtube_views">YouTube Views</label>
-                    <input type="number" id="youtube_views" name="youtube_views" value="2500000" required>
-                </div>
-                <div class="form-group">
-                    <label for="tiktok_views">TikTok Views</label>
-                    <input type="number" id="tiktok_views" name="tiktok_views" value="5000000" required>
-                </div>
-                <div class="form-group">
-                    <label for="spotify_popularity">Spotify Popularity (0-100)</label>
-                    <input type="number" id="spotify_popularity" name="spotify_popularity" value="60" required>
-                </div>
-                <div class="form-group">
-                    <label for="spotify_playlist_count">Spotify Playlist Count</label>
-                    <input type="number" id="spotify_playlist_count" name="spotify_playlist_count" value="500" required>
-                </div>
-                <div class="form-group">
-                    <label for="spotify_playlist_reach">Spotify Playlist Reach</label>
-                    <input type="number" id="spotify_playlist_reach" name="spotify_playlist_reach" value="2000000" required>
-                </div>
-                <div class="form-group">
-                    <label for="youtube_likes">YouTube Likes</label>
-                    <input type="number" id="youtube_likes" name="youtube_likes" value="150000" required>
-                </div>
-                <div class="form-group">
-                    <label for="tiktok_posts">TikTok Posts</label>
-                    <input type="number" id="tiktok_posts" name="tiktok_posts" value="2000" required>
-                </div>
-                <div class="form-group">
-                    <label for="shazam_counts">Shazam Counts</label>
-                    <input type="number" id="shazam_counts" name="shazam_counts" value="25000" required>
-                </div>
-                <div class="form-group">
-                    <label for="airplay_spins">AirPlay Spins</label>
-                    <input type="number" id="airplay_spins" name="airplay_spins" value="1000" required>
-                </div>
-                <div class="form-group">
-                    <label for="days_since_release">Days Since Release</label>
-                    <input type="number" id="days_since_release" name="days_since_release" value="30" required>
-                </div>
-                <div class="form-group">
-                    <label for="explicit_track">Explicit Track (1=Yes, 0=No)</label>
-                    <input type="number" id="explicit_track" name="explicit_track" min="0" max="1" value="1" required>
-                </div>
+        <form action="{{ url_for('predict') }}" method="post" id="prediction-form">
+            
+            <div class="presets">
+                <h3>Quick Scenarios:</h3>
+                <button type="button" class="preset-btn" onclick="applyPreset('niche')">Niche Hit</button>
+                <button type="button" class="preset-btn" onclick="applyPreset('solid')">Solid Performer</button>
+                <button type="button" class="preset-btn" onclick="applyPreset('viral')">Viral Blockbuster</button>
             </div>
-            <button type="submit" class="predict-button">Predict Track Score</button>
+
+            <fieldset>
+                <legend>Spotify Performance</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="spotify_streams">Streams</label>
+                        <input type="number" id="spotify_streams" name="spotify_streams" value="1500000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="spotify_playlist_count">Playlist Count</label>
+                        <input type="number" id="spotify_playlist_count" name="spotify_playlist_count" value="500" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="spotify_playlist_reach">Playlist Reach</label>
+                        <input type="number" id="spotify_playlist_reach" name="spotify_playlist_reach" value="2000000" required>
+                    </div>
+                     <div class="form-group slider-group">
+                        <label for="spotify_popularity">Popularity <span id="popularity-value">60</span></label>
+                        <input type="range" id="spotify_popularity" name="spotify_popularity" min="0" max="100" value="60" required oninput="updatePopularity(this.value)">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Cross-Platform Performance</legend>
+                 <div class="form-grid">
+                     <div class="form-group">
+                        <label for="youtube_views">YouTube Views</label>
+                        <input type="number" id="youtube_views" name="youtube_views" value="2500000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="youtube_likes">YouTube Likes</label>
+                        <input type="number" id="youtube_likes" name="youtube_likes" value="150000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tiktok_views">TikTok Views</label>
+                        <input type="number" id="tiktok_views" name="tiktok_views" value="5000000" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="tiktok_posts">TikTok Posts</label>
+                        <input type="number" id="tiktok_posts" name="tiktok_posts" value="2000" required>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Discovery & Contextual Metrics</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="shazam_counts">Shazam Counts</label>
+                        <input type="number" id="shazam_counts" name="shazam_counts" value="25000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="airplay_spins">AirPlay Spins</label>
+                        <input type="number" id="airplay_spins" name="airplay_spins" value="1000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="days_since_release">Days Since Release</label>
+                        <input type="number" id="days_since_release" name="days_since_release" value="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="explicit_track">Explicit (1=Yes, 0=No)</label>
+                        <input type="number" id="explicit_track" name="explicit_track" min="0" max="1" value="1" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="predict-button">
+                <i class="fas fa-brain"></i> Predict Track Score
+            </button>
         </form>
     </div>
 
-    {% if prediction %}
-    <div class="card result-card">
-        <h2>Simulation Result</h2>
-        <p class="prediction-score">{{ prediction }}</p>
-        <p class="prediction-text">This is the track's potential `track_score`, based on its performance profile compared to hundreds of other global hits.</p>
+    <div class="result-container">
+        <div class="card result-card">
+            <h2>Predicted Score</h2>
+            <div class="gauge">
+                <div class="gauge-body">
+                    <div class="gauge-fill" style="--rotation: {% if prediction %}{{ (prediction | float) * 1.8 }}{% else %}0{% endif %}deg;"></div>
+                    <div class="gauge-cover">
+                        {% if prediction %}
+                            <span class="prediction-score">{{ prediction }}</span>
+                        {% else %}
+                            <span class="prediction-score">-</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <p class="prediction-text">This score reflects the track's potential compared to other global hits, based on its performance profile.</p>
+        </div>
     </div>
-    {% endif %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function updatePopularity(value) {
+        document.getElementById('popularity-value').textContent = value;
+    }
+
+    const presets = {
+        'niche': {
+            'spotify_streams': 500000, 'spotify_playlist_count': 150, 'spotify_playlist_reach': 500000,
+            'spotify_popularity': 45, 'youtube_views': 750000, 'youtube_likes': 40000,
+            'tiktok_views': 1000000, 'tiktok_posts': 500, 'shazam_counts': 5000, 'airplay_spins': 50
+        },
+        'solid': {
+            'spotify_streams': 2500000, 'spotify_playlist_count': 800, 'spotify_playlist_reach': 3000000,
+            'spotify_popularity': 65, 'youtube_views': 4000000, 'youtube_likes': 250000,
+            'tiktok_views': 8000000, 'tiktok_posts': 3000, 'shazam_counts': 25000, 'airplay_spins': 1000
+        },
+        'viral': {
+            'spotify_streams': 15000000, 'spotify_playlist_count': 5000, 'spotify_playlist_reach': 20000000,
+            'spotify_popularity': 85, 'youtube_views': 25000000, 'youtube_likes': 1200000,
+            'tiktok_views': 100000000, 'tiktok_posts': 50000, 'shazam_counts': 150000, 'airplay_spins': 5000
+        }
+    };
+    function applyPreset(level) {
+        const form = document.getElementById('prediction-form');
+        const values = presets[level];
+        for (const key in values) {
+            if (form.elements[key]) {
+                form.elements[key].value = values[key];
+                if (key === 'spotify_popularity') {
+                    updatePopularity(values[key]);
+                }
+            }
+        }
+    }
+</script>
 {% endblock %}
